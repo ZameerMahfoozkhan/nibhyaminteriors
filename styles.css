@@ -50,8 +50,8 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-h); color: var(--black); font-w
 .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 10000; padding: 24px 0; transition: var(--transition); }
 .navbar.scrolled { background: rgba(255, 255, 255, 0.95); padding: 16px 0; box-shadow: var(--shadow-sm); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo-img { height: 64px; transition: var(--transition); }
-.navbar.scrolled .nav-logo-img { height: 48px; filter: invert(1); }
+.nav-logo-img { height: 64px; transition: var(--transition); filter: brightness(0) invert(1); }
+.navbar.scrolled .nav-logo-img { height: 48px; filter: none; }
 .nav-links { display: flex; gap: 32px; }
 .nav-link { font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.9); position: relative; padding-bottom: 4px; }
 .navbar.scrolled .nav-link { color: var(--black); }
