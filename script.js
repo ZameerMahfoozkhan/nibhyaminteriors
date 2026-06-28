@@ -330,10 +330,31 @@ document.addEventListener('DOMContentLoaded', () => {
     setupForm('quotationForm');
     setupForm('consultationForm');
 
-    // 14. SMOOTH SCROLL TO QUOTATION FORM
+    // 14. SMOOTH SCROLL TO QUOTATION FORM & SELECT SERVICE
+    const quoteFormSelect = document.querySelector('#quotationForm select[name="service"]');
+    
     document.querySelectorAll('a[href="#getfreequotation"]').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            
+            // If this button is inside a service card, auto-select the option in the form
+            const parentCard = this.closest('.service-card');
+            if (parentCard && quoteFormSelect) {
+                const serviceTitle = parentCard.querySelector('h3');
+                if (serviceTitle) {
+                    const titleText = serviceTitle.textContent.trim();
+                    const options = quoteFormSelect.options;
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].text === titleText || 
+                            titleText.includes(options[i].text) || 
+                            options[i].text.includes(titleText)) {
+                            quoteFormSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
+            
             const target = document.getElementById('quotationFormWrap');
             if (target) {
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 20;
@@ -345,6 +366,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 15. FOOTER SERVICE LINKS SCROLL TO CARD
+    const serviceCards = document.querySelectorAll('.service-card');
+    
+    document.querySelectorAll('.footer-col ul li a[href="#services"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const linkText = this.textContent.trim().toLowerCase();
+            let targetCard = null;
+            
+            for (let i = 0; i < serviceCards.length; i++) {
+                const cardTitle = serviceCards[i].querySelector('h3').textContent.trim().toLowerCase();
+                
+                // Exact or partial direct match
+                if (cardTitle === linkText || cardTitle.includes(linkText) || linkText.includes(cardTitle)) {
+                    targetCard = serviceCards[i];
+                    break;
+                }
+                
+                // Fallback for slight variations like "Mosquito Mesh Door" -> "Mosquito Protection Mesh Door"
+                const linkWords = linkText.replace(/&/g, '').split(' ').filter(w => w.length > 2);
+                let matchCount = 0;
+                linkWords.forEach(w => {
+                    if (cardTitle.includes(w)) matchCount++;
+                });
+                
+                if (matchCount >= 2 && !targetCard) {
+                    targetCard = serviceCards[i]; // Store best potential match
+                }
+            }
+            
+            if (targetCard) {
+                const targetPosition = targetCard.getBoundingClientRect().top + window.pageYOffset - 100;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Highlight the card briefly
+                const originalShadow = targetCard.style.boxShadow;
+                targetCard.style.transition = 'box-shadow 0.3s ease';
+                targetCard.style.boxShadow = '0 0 0 2px var(--color-gold), 0 10px 30px rgba(212, 175, 55, 0.2)';
+                setTimeout(() => {
+                    targetCard.style.boxShadow = originalShadow;
+                }, 1500);
+            } else {
+                // Fallback to top of services section
+                const servicesSection = document.getElementById('services');
+                if (servicesSection) {
+                    const targetPosition = servicesSection.getBoundingClientRect().top + window.pageYOffset - 80;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
 
-    // 14. SCROLL TO TOP BUTTON (Removed)
 });
