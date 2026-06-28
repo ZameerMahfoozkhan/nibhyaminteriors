@@ -11,13 +11,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
 
+    let lastScrollY = 0;
+
     window.addEventListener('scroll', () => {
         if (navbar) {
-            if (window.scrollY > 50) {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+                navbar.classList.remove('navbar-hidden');
             }
+
+            // Hide on scroll down, show on scroll up (only after 100px)
+            if (currentScrollY > 100) {
+                if (currentScrollY > lastScrollY) {
+                    navbar.classList.add('navbar-hidden');
+                } else {
+                    navbar.classList.remove('navbar-hidden');
+                }
+            }
+
+            lastScrollY = currentScrollY;
         }
     });
 
@@ -313,6 +329,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupForm('quotationForm');
     setupForm('consultationForm');
+
+    // 14. SMOOTH SCROLL TO QUOTATION FORM
+    document.querySelectorAll('a[href="#getfreequotation"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.getElementById('quotationFormWrap');
+            if (target) {
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 20;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
 
 
     // 14. SCROLL TO TOP BUTTON (Removed)
