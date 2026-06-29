@@ -325,6 +325,9 @@ section { padding: 100px 0; }
 /* WHATSAPP & STICKY ESTIMATE */
 .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 9000; transition: var(--transition); }
 .whatsapp-float:hover { transform: scale(1.1); }
+
+.calling-float { position: fixed; bottom: 100px; right: 30px; width: 60px; height: 60px; background: var(--gold, #d4af37); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 9000; transition: var(--transition); }
+.calling-float:hover { transform: scale(1.1); }
 .sticky-estimate-btn { position: fixed; bottom: 30px; left: 30px; background: var(--gold); color: var(--white); padding: 16px 32px; border-radius: 30px; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; box-shadow: var(--shadow-lg); z-index: 9000; transition: var(--transition); display: flex; align-items: center; justify-content: center; text-decoration: none; border: 1px solid transparent; }
 .sticky-estimate-btn:hover { background: var(--black); color: var(--gold); transform: translateY(-3px); }
 
@@ -363,6 +366,7 @@ section { padding: 100px 0; }
     
     .sticky-estimate-btn { bottom: 0; left: 0; width: 100%; border-radius: 0; padding: 18px; font-size: 1rem; }
     .whatsapp-float { bottom: 85px; right: 20px; }
+    .calling-float { bottom: 155px; right: 20px; }
     .footer-bottom { padding-bottom: 80px; }
     
     .hero-title { font-size: 2.5rem; }

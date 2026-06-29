@@ -321,11 +321,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // 12. POPUP FORM LOGIC (Removed)
 
     // 13. FORM SUBMISSIONS
-    const setupForm = (formId, btnText) => {
+    const setupForm = (formId) => {
         const form = document.getElementById(formId);
         if (!form) return;
         
-          };
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const service = formData.get('service') || 'Not specified';
+            const name = formData.get('name') || '';
+            const phone = formData.get('phone') || '';
+            const email = formData.get('email') || 'Not provided';
+            const message = formData.get('message') || 'No additional details';
+            
+            const text = `Hello, I would like to get a quotation.\n\n*Service:* ${service}\n*Name:* ${name}\n*Phone:* ${phone}\n*Email:* ${email}\n*Message:* ${message}`;
+            const whatsappUrl = `https://wa.me/919650703345?text=${encodeURIComponent(text)}`;
+            
+            window.open(whatsappUrl, '_blank');
+        });
+    };
 
     setupForm('quotationForm');
     setupForm('consultationForm');
